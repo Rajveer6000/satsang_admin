@@ -34,15 +34,17 @@ include './navbaradmin.php';
 </head>
 
 <body>
-    <div style="margin-left: 200px;">
-        <h2>Responsive Table</h2>
+    <div style="margin-left: 250px; ">
         <div class="table-wrapper">
+            <center>
+                <h1 style="margin-left: 200px;">Approved posts</h1>
+            </center>
             <table class="fl-table">
                 <thead>
                     <tr>
                         <th>Post ID</th>
-                        <!-- <th>Post Title</th>
-                        <th>Post Text</th> -->
+                        <th>Post Title</th>
+                        <th>Post Text</th>
                         <th>Category</th>
                         <th>Email</th>
                         <th>City</th>
@@ -51,8 +53,7 @@ include './navbaradmin.php';
                         <th>Country</th>
                         <th>Created At</th>
                         <th>Moderated</th>
-
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,8 +61,8 @@ include './navbaradmin.php';
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
                         echo "<td>" . $row['post_id'] . "</td>";
-                        // echo "<td>" . $row['post_title'] . "</td>";
-                        // echo "<td>" . $row['post_txt'] . "</td>";
+                        echo "<td>" . $row['post_title'] . "</td>";
+                        echo "<td>" . $row['post_txt'] . "</td>";
                         echo "<td>" . $row['category'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";
                         echo "<td>" . $row['city'] . "</td>";
@@ -71,9 +72,9 @@ include './navbaradmin.php';
                         echo "<td>" . $row['created_at'] . "</td>";
                         echo "<td>" . $row['moderated'] . "</td>";
                         echo "<td>";
-                        echo "<a href='posts.php?accept=true&postId=" . $row['post_id'] . "'>Accept</a> | ";
-                        echo "<a href='posts.php?delete=true&postId=" . $row['post_id'] . "'>Delete</a>";
-                        echo "</td>";
+                        echo "<a><button onclick='viewPost(" . $row['post_id'] . ")' class='view-btn' >View</button></a>";
+                        echo "<a><button onclick='RejectPost(" . $row['post_id'] . ")' class='rejectbtn'>Reject</button></a>";
+                        echo "<a><button onclick='AcceptPost(" . $row['post_id'] . ")' class='acceptbtn'>Accept</button></a>";
                         echo "</tr>";
                     }
                     ?>
@@ -86,31 +87,94 @@ include './navbaradmin.php';
 </html>
 
 <style>
-    td,
-    th {
-        border: 1px solid #999;
-        padding: 20px;
+    .view-btn {
+        width: 70px;
+        color: white;
+        background-color: #0000FF;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+
+    }
+    .view-btn:hover {
+        background-color: #0000CD;
     }
 
-    td {
-        background: gray;
+    .rejectbtn {
+        background-color: #f44336;
+        width: 70px;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+    .rejectbtn:hover {
+        background-color: #d32f2f;
+    }
+
+    .acceptbtn {
+        background-color: #4CAF50;
+        width: 70px;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+    .acceptbtn:hover {
+        background-color: #45a049;
+    }
+
+    .fl-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .fl-table th {
+        background-color: #FFA500;
         color: white;
     }
 
-    .primary {
-        background-color: brown;
-        position: sticky;
+    .fl-table th,
+    .fl-table td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #ddd;
     }
 
-    th {
-        background: #ffc107;
-        color: white;
-        border-radius: 0;
-        top: 0;
-        padding: 10px;
+    .fl-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
     }
 
-    tbody>tr:hover {
+    .fl-table tbody tr:hover {
         background-color: #ffc107;
     }
+
+
+
+    /* Logout button styles */
+    .logout-btn {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .logout-btn:hover {
+        background-color: #d32f2f;
+    }
 </style>
+<script>
+    function viewPost(post_Id) {
+        console.log(post_Id);
+    }
+</script>
