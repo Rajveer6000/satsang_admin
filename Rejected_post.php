@@ -143,7 +143,6 @@ include './navbaradmin.php';
     .fl-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
     }
 
     .fl-table th {
