@@ -3,7 +3,8 @@
 include './Dbconnection/dbh.php';
 include './navbaradmin.php';
 
-function updateModeratedStatus($postId, $status) {
+function updateModeratedStatus($postId, $status)
+{
     global $conn;
     $sql = "UPDATE posts SET moderated = ? WHERE post_id = ?";
     $stmt = $conn->prepare($sql);
@@ -39,9 +40,9 @@ include './navbaradmin.php';
 <body>
     <div style="margin-left: 250px; ">
         <div class="table-wrapper">
-            <center>
-                <h1 style="margin-left: 200px;">Pending posts</h1>
-            </center>
+            <div class="header">
+                <h1>Pending posts</h1>
+            </div>
 
             <table class="fl-table">
                 <thead>
@@ -74,10 +75,10 @@ include './navbaradmin.php';
                         echo "<td>" . $row['country'] . "</td>";
                         echo "<td>" . $row['created_at'] . "</td>";
                         echo "<td>";
-                        echo "<a><button onclick='viewPost(" . $row['post_id'] . ")' class='view-btn' >View</button></a>";
+                        echo "<a href='view_post.php?id=" . $row['post_id'] . "'><button class='view-btn'>View</button></a>";
                         echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $row['post_id'] . "'><button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
                         echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $row['post_id'] . "'><button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";
-                       echo "</td>";
+                        echo "</td>";
                         echo "</tr>";
                     }
                     ?>
@@ -90,7 +91,9 @@ include './navbaradmin.php';
 </html>
 
 <script>
-
+    function viewPost(postId) {
+        window.location.href = 'view_post.php?id=' + postId;
+    }
 </script>
 <style>
     /* Table styles */
@@ -112,12 +115,19 @@ include './navbaradmin.php';
         border: 1px solid #ddd;
     }
 
+    .header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+
     .fl-table tbody tr:nth-child(even) {
         background-color: #f2f2f2;
     }
 
     .fl-table tbody tr:hover {
-        background-color: #ffc107;
+        background-color:#abaaa6;
     }
 
     .view-btn {

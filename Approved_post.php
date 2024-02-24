@@ -3,7 +3,8 @@
 include './Dbconnection/dbh.php';
 include './navbaradmin.php';
 
-function updateModeratedStatus($postId, $status) {
+function updateModeratedStatus($postId, $status)
+{
     global $conn;
     $sql = "UPDATE posts SET moderated = ? WHERE post_id = ?";
     $stmt = $conn->prepare($sql);
@@ -40,9 +41,9 @@ include './navbaradmin.php';
 <body>
     <div style="margin-left: 250px; ">
         <div class="table-wrapper">
-            <center>
-                <h1 style="margin-left: 200px;">Approved posts</h1>
-            </center>
+            <div class="header">
+                <h1>Approved posts</h1>
+            </div>
             <table class="fl-table">
                 <thead>
                     <tr>
@@ -74,7 +75,7 @@ include './navbaradmin.php';
                         echo "<td>" . $row['country'] . "</td>";
                         echo "<td>" . $row['created_at'] . "</td>";
                         echo "<td>";
-                        echo "<a><button onclick='viewPost(" . $row['post_id'] . ")' class='view-btn' >View</button></a>";
+                        echo "<a href='view_post.php?id=" . $row['post_id'] . "'><button class='view-btn'>View</button></a>";
                         echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $row['post_id'] . "'><button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
                         echo "</tr>";
                     }
@@ -99,6 +100,7 @@ include './navbaradmin.php';
         margin-top: 5px;
 
     }
+
     .view-btn:hover {
         background-color: #0000CD;
     }
@@ -113,8 +115,16 @@ include './navbaradmin.php';
         cursor: pointer;
         margin-top: 5px;
     }
+
     .rejectbtn:hover {
         background-color: #d32f2f;
+    }
+
+    .header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
     }
 
     .acceptbtn {
@@ -127,6 +137,7 @@ include './navbaradmin.php';
         cursor: pointer;
         margin-top: 5px;
     }
+
     .acceptbtn:hover {
         background-color: #45a049;
     }
@@ -154,7 +165,7 @@ include './navbaradmin.php';
     }
 
     .fl-table tbody tr:hover {
-        background-color: #ffc107;
+        background-color:#abaaa6;
     }
 
 
@@ -174,8 +185,9 @@ include './navbaradmin.php';
         background-color: #d32f2f;
     }
 </style>
+
 <script>
-    function viewPost(post_Id) {
-        console.log(post_Id);
+    function viewPost(postId) {
+        window.location.href = 'view_post.php?id=' + postId;
     }
 </script>

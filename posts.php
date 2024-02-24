@@ -8,9 +8,9 @@ $result = mysqli_query($conn, $sql);
 include './navbaradmin.php';
 
 $statuses = array(
-  0 => 'Pending',
-  1 => 'Accepted',
-  2 => 'Rejected'
+    0 => 'Pending',
+    1 => 'Approved',
+    2 => 'Rejected'
 );
 ?>
 
@@ -20,11 +20,12 @@ $statuses = array(
 </head>
 
 <body>
+
     <div style="margin-left: 250px; ">
+        <div class="header">
+            <h1>ALL posts</h1>
+        </div>
         <div class="table-wrapper">
-            <center>
-                <h1 style="margin-left: 200px;">ALL posts</h1>
-            </center>
 
             <table class="fl-table">
                 <thead>
@@ -65,7 +66,11 @@ $statuses = array(
                         // Display the corresponding status with class
                         echo "<td class='$statusClass' data-status='" . strtolower($status) . "'>" . $status . "</td>";
 
-                        echo "<td><button class='view-btn' onclick='viewPost(" . $row['post_id'] . ")'>View</button></td>";
+                        // echo "<td><button class='view-btn' onclick='viewPost(" . $row['post_id'] . ")'>View</button></td>";
+                        // echo "<td><a href='view_post.php?id=" . $row['post_id'] . "' class='view-btn'>View</a></td>";
+                        echo "<td><a href='view_post.php?id=" . $row['post_id'] . "'><button class='view-btn'>View</button></a></td>";
+
+
                         echo "</tr>";
                     }
                     ?>
@@ -74,10 +79,7 @@ $statuses = array(
         </div>
     </div>
 
-    <!-- Logout form -->
-    <form id="logoutForm" method="post">
-        <button type="submit" name="logout" class="logout-btn">Logout</button>
-    </form>
+
 
     <!-- JavaScript function to view post details -->
     <script>
@@ -85,121 +87,119 @@ $statuses = array(
             window.location.href = 'view_post.php?id=' + postId;
         }
 
-        // Logout function
-        document.getElementById('logoutForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-            if (confirm('Are you sure you want to logout?')) {
-                this.submit(); // If the user confirms, submit the form
-            }
-        });
-
         // Set text color based on status
-    window.addEventListener('DOMContentLoaded', (event) => {
-        var statusCells = document.querySelectorAll('.status-td');
+        window.addEventListener('DOMContentLoaded', (event) => {
+            var statusCells = document.querySelectorAll('.status-td');
 
-        statusCells.forEach(function (cell) {
-            var status = cell.getAttribute('data-status').toLowerCase();
-            var colors = {
-                'pending': 'yellow',
-                'accepted': 'green',
-                'rejected': 'red'
-            };
+            statusCells.forEach(function(cell) {
+                var status = cell.getAttribute('data-status').toLowerCase();
+                var colors = {
+                    'pending': 'yellow',
+                    'accepted': 'green',
+                    'rejected': 'red'
+                };
 
-            // Set text color based on status
-            cell.style.color = colors[status] || ''; // Default to empty string if status is not found
+                // Set text color based on status
+                cell.style.color = colors[status] || ''; // Default to empty string if status is not found
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
 
 </html>
+<style>
+    /* Table styles */
+    .fl-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-    <style>
-        /* Table styles */
-        .fl-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    .fl-table th {
+        background-color: #FFA500;
+        color: white;
+    }
 
-        .fl-table th {
-            background-color: #FFA500;
-            color: white;
-        }
+    .fl-table th,
+    .fl-table td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
 
-        .fl-table th,
-        .fl-table td {
-            text-align: left;
-            padding: 8px;
-            border: 1px solid #ddd;
-        }
+    .fl-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
-        .fl-table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+    .fl-table tbody tr:hover {
+        background-color: #abaaa6;
+    }
 
-        .fl-table tbody tr:hover {
-            background-color: #ffc107;
-        }
+    .header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
 
-        .view-btn {
-            width: 70px;
-            color: white;
-            background-color: #0000FF;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
+    .view-btn {
+        width: 70px;
+        color: white;
+        background-color: #0000FF;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
 
-        .view-btn:hover {
-            background-color: #0000CD;
-        }
+    .view-btn:hover {
+        background-color: #0000CD;
+    }
 
-        .rejectbtn {
-            background-color: #f44336;
-            width: 70px;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
+    .rejectbtn {
+        background-color: #f44336;
+        width: 70px;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
 
-        .rejectbtn:hover {
-            background-color: #d32f2f;
-        }
+    .rejectbtn:hover {
+        background-color: #d32f2f;
+    }
 
-        .acceptbtn {
-            background-color: #4CAF50;
-            width: 70px;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
+    .acceptbtn {
+        background-color: #4CAF50;
+        width: 70px;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
 
-        .acceptbtn:hover {
-            background-color: #45a049;
-        }
+    .acceptbtn:hover {
+        background-color: #45a049;
+    }
 
-        /* Logout button styles */
-        .logout-btn {
-            background-color: #f44336;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
+    /* Logout button styles */
+    .logout-btn {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
 
-        .logout-btn:hover {
-            background-color: #d32f2f;
-        }
-    </style>
+    .logout-btn:hover {
+        background-color: #d32f2f;
+    }
+</style>

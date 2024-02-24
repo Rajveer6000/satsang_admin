@@ -2,7 +2,8 @@
 // require_once('dbh.php');
 include './Dbconnection/dbh.php';
 include './navbaradmin.php';
-function updateModeratedStatus($postId, $status) {
+function updateModeratedStatus($postId, $status)
+{
     global $conn;
     $sql = "UPDATE posts SET moderated = ? WHERE post_id = ?";
     $stmt = $conn->prepare($sql);
@@ -13,13 +14,13 @@ function updateModeratedStatus($postId, $status) {
 
 if (isset($_POST['reject_button'])) {
     $postId = $_POST['post_id'];
-    updateModeratedStatus($postId, 2); 
+    updateModeratedStatus($postId, 2);
 }
 
 
 if (isset($_POST['approve_button'])) {
     $postId = $_POST['post_id'];
-    updateModeratedStatus($postId, 1); 
+    updateModeratedStatus($postId, 1);
 }
 
 $sql = "SELECT * FROM posts WHERE moderated = 2";
@@ -37,9 +38,9 @@ include './navbaradmin.php';
 <body>
     <div style="margin-left: 250px; ">
         <div class="table-wrapper">
-            <center>
-                <h1 style="margin-left: 200px;">Rejected posts</h1>
-            </center>
+            <div class="header">
+                <h1>Rejected posts</h1>
+            </div>
             <table class="fl-table">
                 <thead>
                     <tr>
@@ -71,9 +72,9 @@ include './navbaradmin.php';
                         echo "<td>" . $row['country'] . "</td>";
                         echo "<td>" . $row['moderated'] . "</td>";
                         echo "<td>";
-                        echo "<a><button onclick='viewPost(" . $row['post_id'] . ")' class='view-btn'>View</button></a>";
+                        echo "<a href='view_post.php?id=" . $row['post_id'] . "'><button class='view-btn'>View</button></a>";
                         echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $row['post_id'] . "'><button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";
-                       echo "</td>";
+                        echo "</td>";
                         echo "</tr>";
                     }
                     ?>
@@ -97,6 +98,14 @@ include './navbaradmin.php';
         margin-top: 5px;
 
     }
+
+    .header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+
     .view-btn:hover {
         background-color: #0000CD;
     }
@@ -111,6 +120,7 @@ include './navbaradmin.php';
         cursor: pointer;
         margin-top: 5px;
     }
+
     .rejectbtn:hover {
         background-color: #d32f2f;
     }
@@ -125,6 +135,7 @@ include './navbaradmin.php';
         cursor: pointer;
         margin-top: 5px;
     }
+
     .acceptbtn:hover {
         background-color: #45a049;
     }
@@ -152,7 +163,7 @@ include './navbaradmin.php';
     }
 
     .fl-table tbody tr:hover {
-        background-color: #ffc107;
+        background-color: #abaaa6;
     }
 
 
@@ -172,8 +183,9 @@ include './navbaradmin.php';
         background-color: #d32f2f;
     }
 </style>
+
 <script>
-    function viewPost(post_Id) {
-        console.log(post_Id);
+    function viewPost(postId) {
+        window.location.href = 'view_post.php?id=' + postId;
     }
 </script>
