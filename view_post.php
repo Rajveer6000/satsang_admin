@@ -9,22 +9,42 @@ $sql = "SELECT * FROM posts WHERE post_id = ?";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "s", $postId);
 mysqli_stmt_execute($stmt);
-
-
 $result = mysqli_stmt_get_result($stmt);
 $postDetails = mysqli_fetch_assoc($result);
 mysqli_stmt_close($stmt);
 
+function updateModeratedStatus($postId, $status)
+{
+    global $conn;
+    $sql = "UPDATE posts SET moderated = ? WHERE post_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $status, $postId);
+    $stmt->execute();
+    $stmt->close();
+}
+if (isset($_POST['reject_button'])) {
+    $postId = $_POST['post_id'];
+    updateModeratedStatus($postId, 2);
+    header("Location: Rejected_post.php");
+    exit();
+}
+if (isset($_POST['approve_button'])) {
+    $postId = $_POST['post_id'];
+    updateModeratedStatus($postId, 1);
+    header("Location: Approved_post.php");
+    exit();
+}
 
 $statuses = array(
     0 => 'Post Pending',
     1 => 'Post Approved',
     2 => 'Post Rejected'
-  );
+);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,38 +83,74 @@ $statuses = array(
         strong {
             font-weight: bold;
         }
+
+        .rejectbtn {
+            background-color: #f44336;
+            width: 70px;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .rejectbtn:hover {
+            background-color: #d32f2f;
+        }
+
+        .acceptbtn {
+            background-color: #4CAF50;
+            width: 70px;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .acceptbtn:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h1>Post Details</h1>
-</header>
+    <header>
+        <h1>Post Details</h1>
+    </header>
 
-<div class="container">
-    <?php
-    // Display post details
-    if ($postDetails) {
-        echo "<h2>Post Details</h2>";
-        echo "<p><strong>Post ID:</strong> " . $postDetails['post_id'] . "</p>";
-        echo "<p><strong>Title:</strong> " . $postDetails['post_title'] . "</p>";
-        echo "<p><strong>Category:</strong> " . $postDetails['category'] . "</p>";
-        echo "<p><strong>City:</strong> " . $postDetails['city'] . "</p>";
-        echo "<p><strong>District:</strong> " . $postDetails['district'] . "</p>";
-        echo "<p><strong>State:</strong> " . $postDetails['state'] . "</p>";
-        echo "<p><strong>Country:</strong> " . $postDetails['country'] . "</p>";
-        echo "<p><strong>Post Text:</strong> " . $postDetails['post_txt'] . "</p>";
-        echo "<p><strong>Created At:</strong> " . $postDetails['created_at'] . "</p>";
-        $status = $statuses[$postDetails['moderated']];
-        $statusClass = 'status-' . strtolower($status);
-        echo "<td class='$statusClass' data-status='" . strtolower($status) . "'>" . $status . "</td>";
-    } else {
-        echo "<p>Post not found.</p>";
-    }
-    ?>
-</div>
-
-<!-- Include your footer here if needed -->
-
+    <div class="container">
+        <?php
+        if ($postDetails) {
+            echo "<h2>Post Details</h2>";
+            echo "<p><strong>Post ID:</strong> " . $postDetails['post_id'] . "</p>";
+            echo "<p><strong>Title:</strong> " . $postDetails['post_title'] . "</p>";
+            echo "<p><strong>Category:</strong> " . $postDetails['category'] . "</p>";
+            echo "<p><strong>City:</strong> " . $postDetails['city'] . "</p>";
+            echo "<p><strong>District:</strong> " . $postDetails['district'] . "</p>";
+            echo "<p><strong>State:</strong> " . $postDetails['state'] . "</p>";
+            echo "<p><strong>Country:</strong> " . $postDetails['country'] . "</p>";
+            echo "<p><strong>Post Text:</strong> " . $postDetails['post_txt'] . "</p>";
+            echo "<p><strong>Created At:</strong> " . $postDetails['created_at'] . "</p>";
+            $status = $statuses[$postDetails['moderated']];
+            $statusClass = 'status-' . strtolower($status);
+            echo "<td class='$statusClass' data-status='" . strtolower($status) . "'>" . $status . "</td><br><br>";
+            if ($postDetails['moderated'] == 2) {
+                echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";
+            } elseif ($postDetails['moderated'] == 1) {
+                echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
+            } else {
+                echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
+                echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";
+            }
+        } else {
+            echo "<p>Post not found.</p>";
+        }
+        ?>
+    </div>
 </body>
+
 </html>

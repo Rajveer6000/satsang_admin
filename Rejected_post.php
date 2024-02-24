@@ -95,7 +95,7 @@ include './navbaradmin.php';
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        margin-top: 5px;
+        margin: 5px;
 
     }
 
@@ -118,7 +118,7 @@ include './navbaradmin.php';
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        margin-top: 5px;
+        margin: 5px;
     }
 
     .rejectbtn:hover {
@@ -133,7 +133,7 @@ include './navbaradmin.php';
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        margin-top: 5px;
+        margin: 5px;
     }
 
     .acceptbtn:hover {
