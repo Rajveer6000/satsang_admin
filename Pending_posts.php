@@ -2,27 +2,30 @@
 // require_once('dbh.php');
 include './Dbconnection/dbh.php';
 include './navbaradmin.php';
-// Check if accept button is clicked
-if (isset($_GET['accept']) && $_GET['accept'] == 'true') {
-    $postId = $_GET['postId'];
-    // Prepare the SQL query to update moderated status
-    $acceptSql = "UPDATE posts SET moderated = 0 WHERE post_id = '$postId'";
-    // Execute the SQL query
-    mysqli_query($conn, $acceptSql);
+
+function updateModeratedStatus($postId, $status) {
+    global $conn;
+    $sql = "UPDATE posts SET moderated = ? WHERE post_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $status, $postId);
+    $stmt->execute();
+    $stmt->close();
 }
 
-// Check if the delete button is clicked
-if (isset($_GET['delete']) && $_GET['delete'] == 'true') {
-    $postId = $_GET['postId'];
-    // Prepare the SQL query to delete the post
-    $deleteSql = "DELETE FROM posts WHERE post_id = '$postId'";
-    // Execute the SQL query
-    mysqli_query($conn, $deleteSql);
+// Check if the reject button is clicked
+if (isset($_POST['reject_button'])) {
+    $postId = $_POST['post_id'];
+    updateModeratedStatus($postId, 2); // Set moderated status to 2 for rejected
+}
+
+// Check if the approve button is clicked
+if (isset($_POST['approve_button'])) {
+    $postId = $_POST['post_id'];
+    updateModeratedStatus($postId, 1); // Set moderated status to 1 for approved
 }
 
 // Prepare the SQL query to select posts with moderated status 1
 $sql = "SELECT * FROM posts WHERE moderated = 0";
-// Execute the SQL query
 $result = mysqli_query($conn, $sql);
 include './navbaradmin.php';
 ?>
@@ -37,7 +40,7 @@ include './navbaradmin.php';
     <div style="margin-left: 250px; ">
         <div class="table-wrapper">
             <center>
-                <h1 style="margin-left: 200px;">ALL posts</h1>
+                <h1 style="margin-left: 200px;">Pending posts</h1>
             </center>
 
             <table class="fl-table">
@@ -53,7 +56,6 @@ include './navbaradmin.php';
                         <th>District</th>
                         <th>Country</th>
                         <th>Created At</th>
-                        <th>Moderated</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -71,12 +73,11 @@ include './navbaradmin.php';
                         echo "<td>" . $row['district'] . "</td>";
                         echo "<td>" . $row['country'] . "</td>";
                         echo "<td>" . $row['created_at'] . "</td>";
-                        echo "<td>" . $row['moderated'] . "</td>";
                         echo "<td>";
                         echo "<a><button onclick='viewPost(" . $row['post_id'] . ")' class='view-btn' >View</button></a>";
-                        echo "<a><button onclick='RejectPost(" . $row['post_id'] . ")' class='rejectbtn'>Reject</button></a>";
-                        echo "<a><button onclick='AcceptPost(" . $row['post_id'] . ")' class='acceptbtn'>Accept</button></a>";
-                        echo "</td>";
+                        echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $row['post_id'] . "'><button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
+                        echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $row['post_id'] . "'><button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";
+                       echo "</td>";
                         echo "</tr>";
                     }
                     ?>
@@ -90,93 +91,93 @@ include './navbaradmin.php';
 
 <script>
 
-    </script>
-                        <style>
-                            /* Table styles */
-                            .fl-table {
-                                width: 100%;
-                                border-collapse: collapse;
-                                margin-top: 20px;
-                            }
-                    
-                            .fl-table th {
-                                background-color: #FFA500;
-                                color: white;
-                            }
-                    
-                            .fl-table th,
-                            .fl-table td {
-                                text-align: left;
-                                padding: 8px;
-                                border: 1px solid #ddd;
-                            }
-                    
-                            .fl-table tbody tr:nth-child(even) {
-                                background-color: #f2f2f2;
-                            }
-                    
-                            .fl-table tbody tr:hover {
-                                background-color: #ffc107;
-                            }
-                    
-                            .view-btn {
-                                width: 70px;
-                                color: white;
-                                background-color: #0000FF;
-                                padding: 8px 12px;
-                                border: none;
-                                border-radius: 4px;
-                                cursor: pointer;
-                                margin-top: 5px;
-                    
-                            }
-                    
-                            .view-btn:hover {
-                                background-color: #0000CD;
-                            }
-                    
-                            .rejectbtn {
-                                background-color: #f44336;
-                                width: 70px;
-                                color: white;
-                                padding: 8px 12px;
-                                border: none;
-                                border-radius: 4px;
-                                cursor: pointer;
-                                margin-top: 5px;
-                            }
-                    
-                            .rejectbtn:hover {
-                                background-color: #d32f2f;
-                            }
-                    
-                            .acceptbtn {
-                                background-color: #4CAF50;
-                                width: 70px;
-                                color: white;
-                                padding: 8px 12px;
-                                border: none;
-                                border-radius: 4px;
-                                cursor: pointer;
-                                margin-top: 5px;
-                            }
-                    
-                            .acceptbtn:hover {
-                                background-color: #45a049;
-                            }
-                    
-                            /* Logout button styles */
-                            .logout-btn {
-                                background-color: #f44336;
-                                color: white;
-                                padding: 8px 12px;
-                                border: none;
-                                border-radius: 4px;
-                                cursor: pointer;
-                                margin-top: 20px;
-                            }
-                    
-                            .logout-btn:hover {
-                                background-color: #d32f2f;
-                            }
-                        </style>
+</script>
+<style>
+    /* Table styles */
+    .fl-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .fl-table th {
+        background-color: #FFA500;
+        color: white;
+    }
+
+    .fl-table th,
+    .fl-table td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+
+    .fl-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .fl-table tbody tr:hover {
+        background-color: #ffc107;
+    }
+
+    .view-btn {
+        width: 70px;
+        color: white;
+        background-color: #0000FF;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+
+    }
+
+    .view-btn:hover {
+        background-color: #0000CD;
+    }
+
+    .rejectbtn {
+        background-color: #f44336;
+        width: 70px;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+    .rejectbtn:hover {
+        background-color: #d32f2f;
+    }
+
+    .acceptbtn {
+        background-color: #4CAF50;
+        width: 70px;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+    .acceptbtn:hover {
+        background-color: #45a049;
+    }
+
+    /* Logout button styles */
+    .logout-btn {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .logout-btn:hover {
+        background-color: #d32f2f;
+    }
+</style>

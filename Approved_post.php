@@ -2,22 +2,26 @@
 // require_once('dbh.php');
 include './Dbconnection/dbh.php';
 include './navbaradmin.php';
-// Check if accept button is clicked
-if (isset($_GET['accept']) && $_GET['accept'] == 'true') {
-    $postId = $_GET['postId'];
-    // Prepare the SQL query to update moderated status
-    $acceptSql = "UPDATE posts SET moderated = 0 WHERE post_id = '$postId'";
-    // Execute the SQL query
-    mysqli_query($conn, $acceptSql);
+
+function updateModeratedStatus($postId, $status) {
+    global $conn;
+    $sql = "UPDATE posts SET moderated = ? WHERE post_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $status, $postId);
+    $stmt->execute();
+    $stmt->close();
 }
 
-// Check if the delete button is clicked
-if (isset($_GET['delete']) && $_GET['delete'] == 'true') {
-    $postId = $_GET['postId'];
-    // Prepare the SQL query to delete the post
-    $deleteSql = "DELETE FROM posts WHERE post_id = '$postId'";
-    // Execute the SQL query
-    mysqli_query($conn, $deleteSql);
+// Check if the reject button is clicked
+if (isset($_POST['reject_button'])) {
+    $postId = $_POST['post_id'];
+    updateModeratedStatus($postId, 2); // Set moderated status to 2 for rejected
+}
+
+// Check if the approve button is clicked
+if (isset($_POST['approve_button'])) {
+    $postId = $_POST['post_id'];
+    updateModeratedStatus($postId, 1); // Set moderated status to 1 for approved
 }
 
 // Prepare the SQL query to select posts with moderated status 1
@@ -52,7 +56,6 @@ include './navbaradmin.php';
                         <th>District</th>
                         <th>Country</th>
                         <th>Created At</th>
-                        <th>Moderated</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -70,11 +73,9 @@ include './navbaradmin.php';
                         echo "<td>" . $row['district'] . "</td>";
                         echo "<td>" . $row['country'] . "</td>";
                         echo "<td>" . $row['created_at'] . "</td>";
-                        echo "<td>" . $row['moderated'] . "</td>";
                         echo "<td>";
                         echo "<a><button onclick='viewPost(" . $row['post_id'] . ")' class='view-btn' >View</button></a>";
-                        echo "<a><button onclick='RejectPost(" . $row['post_id'] . ")' class='rejectbtn'>Reject</button></a>";
-                       
+                        echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $row['post_id'] . "'><button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
                         echo "</tr>";
                     }
                     ?>
