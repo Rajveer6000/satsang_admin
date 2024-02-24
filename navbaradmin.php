@@ -10,6 +10,42 @@ include './Dbconnection/dbh.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADMIN LOGIN</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="side-navbar" style="padding-top: 70px;">
+            <p>ADMIN DASHBOARD</p>
+            <ul style="margin-top: 70px;">
+                <li class="pageLinks"><a href="./posts.php">All Posts</a></li>
+                <li class="pageLinks"><a href="./Pending_posts.php">Pending Posts</a></li>
+                <li class="pageLinks"><a href="./Approved_post.php">Approved Posts</a></li>
+                <li class="pageLinks"><a href="./Rejected_post.php">Rejected Posts</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Logout button at the bottom -->
+    <div class="logout-container">
+        <form action="./logout.php">
+            <button class="logout-btn2">Logout</button>
+        </form>
+    </div>
+
+    <script>
+        var currentUrl = window.location.href;
+        var pageLinks = document.querySelectorAll('.pageLinks');
+        pageLinks.forEach(function(link) {
+            var linkUrl = link.querySelector('a').href;
+            if (currentUrl.includes(linkUrl)) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
+
     <style>
         /* Global Styles */
         body {
@@ -90,37 +126,3 @@ include './Dbconnection/dbh.php';
             cursor: pointer;
         }
     </style>
-</head>
-
-<body>
-    <div class="main">
-        <div class="side-navbar" style="padding-top: 70px;">
-            <p>ADMIN DASHBOARD</p>
-            <ul style="margin-top: 70px;">
-                <li class="pageLinks"><a href="./posts.php">All Posts</a></li>
-                <li class="pageLinks"><a href="./Pending_posts.php">Pending Posts</a></li>
-                <li class="pageLinks"><a href="./Approved_post.php">Approved Posts</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Logout button at the bottom -->
-    <div class="logout-container">
-        <form action="./logout.php">
-            <button class="logout-btn2">Logout</button>
-        </form>
-    </div>
-
-    <script>
-        var currentUrl = window.location.href;
-        var pageLinks = document.querySelectorAll('.pageLinks');
-        pageLinks.forEach(function(link) {
-            var linkUrl = link.querySelector('a').href;
-            if (currentUrl.includes(linkUrl)) {
-                link.classList.add('active');
-            }
-        });
-    </script>
-</body>
-
-</html>

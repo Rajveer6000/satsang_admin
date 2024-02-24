@@ -74,7 +74,7 @@ include './navbaradmin.php';
                         echo "<td>";
                         echo "<a><button onclick='viewPost(" . $row['post_id'] . ")' class='view-btn' >View</button></a>";
                         echo "<a><button onclick='RejectPost(" . $row['post_id'] . ")' class='rejectbtn'>Reject</button></a>";
-                        echo "<a><button onclick='AcceptPost(" . $row['post_id'] . ")' class='acceptbtn'>Accept</button></a>";
+                       
                         echo "</tr>";
                     }
                     ?>

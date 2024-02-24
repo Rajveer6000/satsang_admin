@@ -10,6 +10,23 @@ include './Dbconnection/dbh.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADMIN LOGIN</title>
+</head>
+<body>
+    <div class="container">
+        <h2>ADMIN LOGIN</h2>
+        <form action="./aprocess.php" name="adminlogin" method="post">
+            <label for="user_name">User Name</label>
+            <input type="text" name="user_name" placeholder="Enter your username" autocomplete="off" required>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Enter your password" autocomplete="off" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -82,19 +99,3 @@ include './Dbconnection/dbh.php';
             background-color: #27ae60;
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h2>ADMIN LOGIN</h2>
-        <form action="./aprocess.php" name="adminlogin" method="post">
-            <label for="user_name">User Name</label>
-            <input type="text" name="user_name" placeholder="Enter your username" autocomplete="off" required>
-
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="Enter your password" autocomplete="off" required>
-
-            <button type="submit">Login</button>
-        </form>
-    </div>
-</body>
-</html>

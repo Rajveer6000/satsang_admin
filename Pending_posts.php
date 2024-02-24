@@ -31,95 +31,6 @@ include './navbaradmin.php';
 
 <head>
     <link rel="stylesheet" type="text/css">
-    <style>
-        /* Table styles */
-        .fl-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .fl-table th {
-            background-color: #FFA500;
-            color: white;
-        }
-
-        .fl-table th,
-        .fl-table td {
-            text-align: left;
-            padding: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .fl-table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .fl-table tbody tr:hover {
-            background-color: #ffc107;
-        }
-
-        .view-btn {
-            width: 70px;
-            color: white;
-            background-color: #0000FF;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 5px;
-
-        }
-
-        .view-btn:hover {
-            background-color: #0000CD;
-        }
-
-        .rejectbtn {
-            background-color: #f44336;
-            width: 70px;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-
-        .rejectbtn:hover {
-            background-color: #d32f2f;
-        }
-
-        .acceptbtn {
-            background-color: #4CAF50;
-            width: 70px;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-
-        .acceptbtn:hover {
-            background-color: #45a049;
-        }
-
-        /* Logout button styles */
-        .logout-btn {
-            background-color: #f44336;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .logout-btn:hover {
-            background-color: #d32f2f;
-        }
-    </style>
 </head>
 
 <body>
@@ -176,3 +87,96 @@ include './navbaradmin.php';
 </body>
 
 </html>
+
+<script>
+
+    </script>
+                        <style>
+                            /* Table styles */
+                            .fl-table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-top: 20px;
+                            }
+                    
+                            .fl-table th {
+                                background-color: #FFA500;
+                                color: white;
+                            }
+                    
+                            .fl-table th,
+                            .fl-table td {
+                                text-align: left;
+                                padding: 8px;
+                                border: 1px solid #ddd;
+                            }
+                    
+                            .fl-table tbody tr:nth-child(even) {
+                                background-color: #f2f2f2;
+                            }
+                    
+                            .fl-table tbody tr:hover {
+                                background-color: #ffc107;
+                            }
+                    
+                            .view-btn {
+                                width: 70px;
+                                color: white;
+                                background-color: #0000FF;
+                                padding: 8px 12px;
+                                border: none;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                margin-top: 5px;
+                    
+                            }
+                    
+                            .view-btn:hover {
+                                background-color: #0000CD;
+                            }
+                    
+                            .rejectbtn {
+                                background-color: #f44336;
+                                width: 70px;
+                                color: white;
+                                padding: 8px 12px;
+                                border: none;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                margin-top: 5px;
+                            }
+                    
+                            .rejectbtn:hover {
+                                background-color: #d32f2f;
+                            }
+                    
+                            .acceptbtn {
+                                background-color: #4CAF50;
+                                width: 70px;
+                                color: white;
+                                padding: 8px 12px;
+                                border: none;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                margin-top: 5px;
+                            }
+                    
+                            .acceptbtn:hover {
+                                background-color: #45a049;
+                            }
+                    
+                            /* Logout button styles */
+                            .logout-btn {
+                                background-color: #f44336;
+                                color: white;
+                                padding: 8px 12px;
+                                border: none;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                margin-top: 20px;
+                            }
+                    
+                            .logout-btn:hover {
+                                background-color: #d32f2f;
+                            }
+                        </style>
