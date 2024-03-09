@@ -1,5 +1,13 @@
 <?php
-// require_once('dbh.php');
+session_start();
+include './Dbconnection/dbconnect.php';
+include './Dbconnection/dbh.php';
+
+if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
+    // Redirect to login page
+    header("location: index.php");
+    exit;
+}// require_once('dbh.php');
 include './Dbconnection/dbh.php';
 include './navbaradmin.php';
 function updateModeratedStatus($postId, $status)

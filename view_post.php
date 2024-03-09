@@ -1,8 +1,13 @@
 <?php
+session_start();
 include './Dbconnection/dbconnect.php';
 include './Dbconnection/dbh.php';
 include './navbaradmin.php';
-
+if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
+    // Redirect to login page
+    header("location: index.php");
+    exit;
+}
 $postId = isset($_GET['id']) ? trim(mysqli_real_escape_string($conn, $_GET['id'])) : '';
 
 $sql = "SELECT * FROM posts WHERE post_id = ?";

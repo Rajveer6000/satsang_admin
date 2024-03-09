@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 include './Dbconnection/dbconnect.php';
 include './Dbconnection/dbh.php';
 

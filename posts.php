@@ -1,7 +1,13 @@
 <?php
+session_start();
 include './Dbconnection/dbconnect.php';
 include './Dbconnection/dbh.php';
 
+if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true) {
+    // Redirect to login page
+    header("location: index.php");
+    exit;
+}
 $sql = "SELECT * FROM posts";
 $result = mysqli_query($conn, $sql);
 
