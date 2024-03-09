@@ -44,10 +44,10 @@ include './navbaradmin.php';
 </head>
 
 <body>
-    <div style="margin-left: 250px; ">
+    <div class="container">
         <div class="table-wrapper">
             <div class="header">
-                <h1>Rejected posts</h1>
+                <h1>Rejected Posts</h1>
             </div>
             <table class="fl-table">
                 <thead>
@@ -57,10 +57,7 @@ include './navbaradmin.php';
                         <th>Post Text</th>
                         <th>Category</th>
                         <th>Email</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>District</th>
-                        <th>Country</th>
+                        <th>Location</th>
                         <th>Created At</th>
                         <th>Action</th>
                     </tr>
@@ -71,15 +68,13 @@ include './navbaradmin.php';
                         echo "<tr>";
                         echo "<td>" . $row['post_id'] . "</td>";
                         echo "<td>" . $row['post_title'] . "</td>";
-                        echo "<td>" . $row['post_txt'] . "</td>";
+                        echo "<td class='post-text'>" . $row['post_txt'] . "</td>";
                         echo "<td>" . $row['category'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";
-                        echo "<td>" . $row['city'] . "</td>";
-                        echo "<td>" . $row['state'] . "</td>";
-                        echo "<td>" . $row['district'] . "</td>";
-                        echo "<td>" . $row['country'] . "</td>";
-                        echo "<td>" . $row['moderated'] . "</td>";
-                        echo "<td>";
+                        echo "<td>" . $row['city'] . ", " . $row['district'] . ", " . $row['state'] . ", " . $row['country'] . "</td>";
+                        echo "<td>" . $row['created_at'] . "</td>";
+                    
+                        echo "<td class='action'>";
                         echo "<a href='view_post.php?id=" . $row['post_id'] . "'><button class='view-btn'>View</button></a>";
                         echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $row['post_id'] . "'><button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";
                         echo "</td>";
@@ -95,6 +90,13 @@ include './navbaradmin.php';
 </html>
 
 <style>
+
+.container{
+        margin-right:50px;
+        margin-left:300px;
+    }
+
+
     .view-btn {
         width: 70px;
         color: white;
@@ -108,10 +110,22 @@ include './navbaradmin.php';
     }
 
     .header {
-        background-color: #333;
-        color: #fff;
         padding: 10px;
         text-align: center;
+    }
+
+    
+    .fl-table td.action {
+        text-align: center;
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+    
+    .fl-table td.post-text {
+        max-width: 250px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .view-btn:hover {
@@ -154,11 +168,12 @@ include './navbaradmin.php';
     }
 
     .fl-table th {
-        background-color: #FFA500;
-        color: white;
-    }
-
-    .fl-table th,
+    background-color: #FFA500;
+    color: white;
+    text-align: center; 
+    padding: 8px;
+    border: 1px solid #ddd;
+}
     .fl-table td {
         text-align: left;
         padding: 8px;

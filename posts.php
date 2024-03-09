@@ -27,9 +27,9 @@ $statuses = array(
 
 <body>
 
-    <div style="margin-left: 250px; ">
+    <div class="container">
         <div class="header">
-            <h1>ALL posts</h1>
+            <h1>All Posts</h1>
         </div>
         <div class="table-wrapper">
 
@@ -41,10 +41,7 @@ $statuses = array(
                         <th>Post Text</th>
                         <th>Category</th>
                         <th>Email</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>District</th>
-                        <th>Country</th>
+                        <th>Location</th>
                         <th>Created At</th>
                         <th>Moderated</th>
                         <th>Action</th>
@@ -54,26 +51,18 @@ $statuses = array(
                     <?php
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td>" . $row['post_id'] . "</td>";
+                        echo "<td class='id'>" . $row['post_id'] . "</td>";
                         echo "<td>" . $row['post_title'] . "</td>";
-                        echo "<td>" . $row['post_txt'] . "</td>";
+                        echo "<td class='post-text'>" . $row['post_txt'] . "</td>";
                         echo "<td>" . $row['category'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";
-                        echo "<td>" . $row['city'] . "</td>";
-                        echo "<td>" . $row['state'] . "</td>";
-                        echo "<td>" . $row['district'] . "</td>";
-                        echo "<td>" . $row['country'] . "</td>";
+                        echo "<td>" . $row['city'] . ", " . $row['district'] . ", " . $row['state'] . ", " . $row['country'] . "</td>";
                         echo "<td>" . $row['created_at'] . "</td>";
 
-                        // Associative array mapping 'moderated' values to statuses
                         $status = $statuses[$row['moderated']];
                         $statusClass = 'status-' . strtolower($status);
 
-                        // Display the corresponding status with class
                         echo "<td class='$statusClass' data-status='" . strtolower($status) . "'>" . $status . "</td>";
-
-                        // echo "<td><button class='view-btn' onclick='viewPost(" . $row['post_id'] . ")'>View</button></td>";
-                        // echo "<td><a href='view_post.php?id=" . $row['post_id'] . "' class='view-btn'>View</a></td>";
                         echo "<td><a href='view_post.php?id=" . $row['post_id'] . "'><button class='view-btn'>View</button></a></td>";
 
 
@@ -116,6 +105,35 @@ $statuses = array(
 </html>
 <style>
     /* Table styles */
+
+    .container{
+        margin-right:50px;
+        margin-left:300px;
+    }
+
+    .fl-table td.post-text {
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .fl-table th.id {
+        max-width: 300px;
+ 
+    }
+
+    .fl-table tbody tr:hover {
+        background-color: #abaaa6;
+    }
+
+    .fl-table tbody tr td.post-text {
+        max-width: 200px; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     .fl-table {
         width: 100%;
         border-collapse: collapse;
@@ -124,9 +142,12 @@ $statuses = array(
     .fl-table th {
         background-color: #FFA500;
         color: white;
+        text-align: center;
+        padding: 8px;
+        border: 1px solid #ddd;
     }
 
-    .fl-table th,
+
     .fl-table td {
         text-align: left;
         padding: 8px;
@@ -142,8 +163,7 @@ $statuses = array(
     }
 
     .header {
-        background-color: #333;
-        color: #fff;
+        color: #000;
         padding: 10px;
         text-align: center;
     }

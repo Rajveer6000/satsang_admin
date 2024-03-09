@@ -41,9 +41,9 @@ if (isset($_POST['approve_button'])) {
 }
 
 $statuses = array(
-    0 => 'Post Pending',
-    1 => 'Post Approved',
-    2 => 'Post Rejected'
+    0 => 'Pending',
+    1 => 'Approved',
+    2 => 'Rejected'
 );
 ?>
 
@@ -142,11 +142,11 @@ $statuses = array(
             echo "<p><strong>Created At:</strong> " . $postDetails['created_at'] . "</p>";
             $status = $statuses[$postDetails['moderated']];
             $statusClass = 'status-' . strtolower($status);
-            echo "<td class='$statusClass' data-status='" . strtolower($status) . "'>" . $status . "</td><br><br>";
+            echo "<br><td class='$statusClass' data-status='" . strtolower($status) . "'>" . "This post has been "."<span style='font-weight:bold;'>".$status."</span>" . "</td><br>";
             if ($postDetails['moderated'] == 2) {
-                echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";
+                echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><span>Would you like to Approve it?</span>&nbsp<button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";
             } elseif ($postDetails['moderated'] == 1) {
-                echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
+                echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><span>Would you like to Reject it?</span>&nbsp<button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
             } else {
                 echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><button type='submit' name='reject_button' class='rejectbtn'>Reject</button></form>";
                 echo "<form method='post' style='display:inline;'><input type='hidden' name='post_id' value='" . $postDetails['post_id'] . "'><button type='submit' name='approve_button' class='acceptbtn'>Approve</button></form>";

@@ -14,8 +14,8 @@ include './Dbconnection/dbh.php';
 
 <body>
     <div class="main">
-        <div class="side-navbar" style="padding-top: 70px;">
-            <p>ADMIN DASHBOARD</p>
+        <div class="side-navbar">
+            <p>SATSANGEE<br>ADMIN DASHBOARD</p>
             <ul style="margin-top: 70px;">
                 <li class="pageLinks"><a href="./posts.php">All Posts</a></li>
                 <li class="pageLinks"><a href="./Pending_posts.php">Pending Posts</a></li>
@@ -65,7 +65,7 @@ include './Dbconnection/dbh.php';
             width: 250px;
             height: 100vh;
             position: fixed;
-            padding-top: 20px;
+            padding-top: 100px;
         }
 
         .side-navbar p {
