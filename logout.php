@@ -1,4 +1,7 @@
 <?php
+// Set the session lifetime to 1 minute
+ini_set('session.gc_maxlifetime', 60);
+
 session_start();
 
 // Unset all of the session variables
